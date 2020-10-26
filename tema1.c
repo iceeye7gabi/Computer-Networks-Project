@@ -1,4 +1,4 @@
- #include <stdlib.h>
+    #include <stdlib.h>
     #include <errno.h>
     #include <unistd.h>
     #include <sys/types.h>
@@ -13,7 +13,7 @@
     #include<linux/limits.h>
     #include <dirent.h>  
    
-    program andrei
+    
    
 void parcurgere(char* path,char* sir)
 {
