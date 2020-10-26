@@ -58,43 +58,7 @@ else
     }
 closedir(fis);
 }
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+ 
    void printfFileProp(struct stat stats) {
    		struct tm dt;
    
