@@ -209,3 +209,4 @@ void printfFileProp(struct stat stats) {
  //https://profs.info.uaic.ro/~andrei.panu/ (link-urile puse pentru fiecare saptamana)
  //https://codeforwin.org/2018/03/c-program-find-file-properties-using-stat-function.html 	 (folosit pt functia mystat)
  //https://en.wikibooks.org/wiki/C_Programming/POSIX_Reference/dirent.h(folosit pt functia myfind)
+// i hope it's ok :)
