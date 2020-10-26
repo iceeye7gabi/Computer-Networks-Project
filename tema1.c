@@ -10,7 +10,89 @@
     #include <time.h>
     #include <sys/stat.h>
     #include <fcntl.h>
+    #include<linux/limits.h>
+    #include <stdio.h>
+#include <dirent.h>
+#include<stdlib.h>
+#include<string.h>
+#include<linux/limits.h>
+#include<sys/stat.h>
+#include<time.h>
     //using namespace std;
+   
+   //program andrei
+   
+   void parcurgere(char* path,char* sir)
+{
+struct dirent *drum;
+  DIR *fis;
+  char next_path[PATH_MAX];
+  strcpy(next_path,path);
+  fis=opendir(path);
+//printf("%s\n\n",path);
+char*p=strrchr(path,'/');
+char cuv[100];
+if(fis==NULL){
+strcpy(cuv,p+1);
+if(strcmp(cuv,sir)==0)
+  {
+     printf("%s\n",path);
+     struct stat stare;
+     stat(path,&stare);
+ 
+  }
+
+}
+else
+  while((drum=readdir(fis)))
+    {
+    if(drum->d_name[0]!='.')
+        {
+         if(strlen(next_path)!=1)
+         strcat(next_path,"/");
+         strcat(next_path,drum->d_name);
+         if((strcmp(next_path,"/proc")!=0)&&(strcmp(next_path,"/dev")!=0)&&(strcmp(next_path,"/sys")!=0))
+         parcurgere(next_path,sir);
+         strcpy(next_path,path);
+        }
+    }
+closedir(fis);
+}
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    void printfFileProp(struct stat stats) {
@@ -62,6 +144,7 @@
         socketpair(AF_UNIX, SOCK_STREAM, 0, sockp);
         int sockp2[2];
         int fifo;
+        char fisier[50];
         socketpair(AF_UNIX, SOCK_STREAM, 0, sockp2);
         mkfifo("myfifo",0666);
         
@@ -113,6 +196,21 @@
                		scanf("%s",path);
                		if(stat(path, &stats)==0)  printfFileProp(stats);
                		strcpy(answer,"Rezultate obtinute");
+               		write(sockp[1],answer,sizeof(answer));
+               		exit(0);
+               	
+               	}
+               	
+               	
+               	
+               	else if(strcmp(command,"myfind")==0) {
+               		
+      					printf("Introduceti numele fisierului : \n");
+     					 scanf("%s",fisier);
+               		char* p = strchr(fisier, '\n');
+    				//if (p==0)  *p = 0;
+   				parcurgere("/",fisier);
+               		strcpy(answer,"\n");
                		write(sockp[1],answer,sizeof(answer));
                		exit(0);
                	
