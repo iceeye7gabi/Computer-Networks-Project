@@ -198,4 +198,14 @@ void printfFileProp(struct stat stats) {
 		       
        }	
    }
- }	
+ }
+ 
+ 
+ 
+ 					//RESOURCES
+ //https://www.youtube.com/watch?v=Mqb2dVRe0uo
+ //https://www.youtube.com/watch?v=8Q9CPWuRC6o
+ //https://www.youtube.com/watch?v=2hba3etpoJg
+ //https://profs.info.uaic.ro/~andrei.panu/ (link-urile puse pentru fiecare saptamana)
+ //https://codeforwin.org/2018/03/c-program-find-file-properties-using-stat-function.html 	 (folosit pt functia mystat)
+ //https://en.wikibooks.org/wiki/C_Programming/POSIX_Reference/dirent.h(folosit pt functia myfind)
