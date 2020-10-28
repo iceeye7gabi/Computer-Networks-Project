@@ -1,4 +1,4 @@
-    #include <stdlib.h>
+#include <stdlib.h>
     #include <errno.h>
     #include <unistd.h>
     #include <sys/types.h>
@@ -24,21 +24,18 @@ void myfind(char* string,char* road)
   if(F==NULL){
   strcpy(w1,p+1);
   if(strcmp(w1,string)==0){
-     printf("%s",road);printf("\n");
-     struct stat state;
-     stat(road,&state);
+     printf("%s",road);
+     printf("\n");
      }
 }
 else
-  while((PATH_FIRST=readdir(F)))
-    {
-    if(PATH_FIRST->d_name[0]!='.')
-        {
+  while((PATH_FIRST=readdir(F))){
+    if(PATH_FIRST->d_name[0]!='.'){
          if(strlen(PATH_SEC)!=1)
-         strcat(PATH_SEC,"/");
+         	strcat(PATH_SEC,"/");
          strcat(PATH_SEC,PATH_FIRST->d_name);
-         if((strcmp(PATH_SEC,"/proc")!=0)&&(strcmp(PATH_SEC,"/dev")!=0)&&(strcmp(PATH_SEC,"/sys")!=0))
-         myfind(string,PATH_SEC);
+         if((strcmp(PATH_SEC,"/dev")!=0)&&(strcmp(PATH_SEC,"/sys")!=0)&&(strcmp(PATH_SEC,"/proc")!=0))
+         	myfind(string,PATH_SEC);
          strcpy(PATH_SEC,road);
         }
     }
@@ -60,12 +57,14 @@ void mystat(struct stat stats) {
    printf("Dimensiunea fisierului : %ld", stats.st_size);
    		
     dt = *(gmtime(&stats.st_ctime));
-    printf("\nModified on: %d-%d-%d %d:%d:%d", dt.tm_mday, dt.tm_mon+1, dt.tm_year , 
-                                              dt.tm_hour+2, dt.tm_min, dt.tm_sec);
+    printf("\nModified on: %d-%d-%d %d:%d:%d",
+     dt.tm_mday, dt.tm_mon+1, dt.tm_year , 
+     dt.tm_hour+2, dt.tm_min, dt.tm_sec);
 
     dt = *(gmtime(&stats.st_mtime));
-    printf("\nCreated on: %d-%d-%d %d:%d:%d", dt.tm_mday, dt.tm_mon+1, dt.tm_year , 
-                                              dt.tm_hour+2, dt.tm_min, dt.tm_sec);
+    printf("\nCreated on: %d-%d-%d %d:%d:%d", 
+    dt.tm_mday, dt.tm_mon+1, dt.tm_year , 
+    dt.tm_hour+2, dt.tm_min, dt.tm_sec);
 
 	// am pus la hour +2 pentru ca cumva imi da ceasul cu 2 ore mai putin
 	// am pus la month +1 pentru ca cumva imi da luna anterioare(in loc de oct este sep)
@@ -175,16 +174,24 @@ void mystat(struct stat stats) {
                 	wait(NULL);
                 	if(strcmp(sir,"Ati iesit din aplicatie.")==0){
                 		printf("%s\n",sir);
+                               printf("[INFO]Aplicatie realizata de Constantinescu George-Gabriel,Grupa E3,Anul 2,Anul universitar 2020-2021, Disciplina Retele de Calculatoare \n");
                 		return 0;
                 	}
                	    
+                }
+                if(strcmp(command,"meniu")==0){
+                	printf("Acestea sunt comenzile pe care le poti introduce \n");
+                	printf("login \n");printf("myfind \n");printf("mystat \n");
+                	printf("meniu \n");printf("exit \n");
+                	
+                
                 }
         	else{
             		strcpy(xx,"other");
              		write(fd2[1],xx,sizeof(xx));
              		write(fd[1],command,sizeof(command));
-                                                                //PROCES TATA
-              		wait(NULL);
+                                                                                                        
+       		wait(NULL);
               		char sir[50];
              		read(sockp[0],sir,sizeof(sir));
              		printf("%s\n",sir);
