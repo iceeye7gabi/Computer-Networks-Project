@@ -175,6 +175,7 @@ void mystat(struct stat stats) {
                 	if(strcmp(sir,"Ati iesit din aplicatie.")==0){
                 		printf("%s\n",sir);
                                printf("[INFO]Aplicatie realizata de Constantinescu George-Gabriel,Grupa E3,Anul 2,Anul universitar 2020-2021, Disciplina Retele de Calculatoare \n");
+                               printf("Profesor de laborator: Panu Andrei\n");
                 		return 0;
                 	}
                	    
