@@ -1,4 +1,4 @@
-#include <stdlib.h>
+    #include <stdlib.h>
     #include <errno.h>
     #include <unistd.h>
     #include <sys/types.h>
@@ -12,46 +12,40 @@
     #include <fcntl.h>
     #include<linux/limits.h>
     #include <dirent.h>  
-   
+    
     
    
-void parcurgere(char* path,char* sir)
-{
-  struct dirent *drum;
-  DIR *fis;
-  char next_path[PATH_MAX];
-  strcpy(next_path,path);
-  fis=opendir(path);
-  char*p=strrchr(path,'/');
-  char cuv[100];
-  if(fis==NULL){
-  strcpy(cuv,p+1);
-  if(strcmp(cuv,sir)==0)
-  {
-     printf("%s\n",path);
-     struct stat stare;
-     stat(path,&stare);
- 
-  }
-
+void myfind(char* string,char* road)
+{ DIR *F;F=opendir(road);
+  char *p=strrchr(road,'/'),w1[1000];
+  char PATH_SEC[PATH_MAX];
+  struct dirent *PATH_FIRST;
+  strcpy(PATH_SEC,road);
+  if(F==NULL){
+  strcpy(w1,p+1);
+  if(strcmp(w1,string)==0){
+     printf("%s",road);printf("\n");
+     struct stat state;
+     stat(road,&state);
+     }
 }
 else
-  while((drum=readdir(fis)))
+  while((PATH_FIRST=readdir(F)))
     {
-    if(drum->d_name[0]!='.')
+    if(PATH_FIRST->d_name[0]!='.')
         {
-         if(strlen(next_path)!=1)
-         strcat(next_path,"/");
-         strcat(next_path,drum->d_name);
-         if((strcmp(next_path,"/proc")!=0)&&(strcmp(next_path,"/dev")!=0)&&(strcmp(next_path,"/sys")!=0))
-         parcurgere(next_path,sir);
-         strcpy(next_path,path);
+         if(strlen(PATH_SEC)!=1)
+         strcat(PATH_SEC,"/");
+         strcat(PATH_SEC,PATH_FIRST->d_name);
+         if((strcmp(PATH_SEC,"/proc")!=0)&&(strcmp(PATH_SEC,"/dev")!=0)&&(strcmp(PATH_SEC,"/sys")!=0))
+         myfind(string,PATH_SEC);
+         strcpy(PATH_SEC,road);
         }
     }
-  closedir(fis);
+  closedir(F);
 }
  
-void printfFileProp(struct stat stats) {
+void mystat(struct stat stats) {
    struct tm dt;
    
    printf("Accese fisier: ");
@@ -141,7 +135,7 @@ void printfFileProp(struct stat stats) {
                	else if(strcmp(command,"mystat")==0) {
                		printf("Introduceti path-ul: ");
                		scanf("%s",path);
-               		if(stat(path, &stats)==0)  printfFileProp(stats);
+               		if(stat(path, &stats)==0)  mystat(stats);
                		strcpy(answer,"Rezultate obtinute");
                		write(sockp[1],answer,sizeof(answer));
                		exit(0);
@@ -152,7 +146,7 @@ void printfFileProp(struct stat stats) {
      				scanf("%s",fisier);
                		char* p = strchr(fisier, '\n');
     				//if (p==0)  *p = 0;
-   				parcurgere("/",fisier);
+   				myfind(fisier,"/");
                		strcpy(answer,"\n");
                		write(sockp[1],answer,sizeof(answer));
                		exit(0);
