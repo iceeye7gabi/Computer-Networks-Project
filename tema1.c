@@ -1,4 +1,4 @@
-    #include <stdlib.h>
+#include <stdlib.h>
     #include <errno.h>
     #include <unistd.h>
     #include <sys/types.h>
@@ -66,7 +66,7 @@ void printfFileProp(struct stat stats) {
    printf("Dimensiunea fisierului : %ld", stats.st_size);
    		
     dt = *(gmtime(&stats.st_ctime));
-    printf("\nModified on: %d-%d-%d %d:%d:%d", dt.tm_mday, dt.tm_mon+1, dt.tm_year  
+    printf("\nModified on: %d-%d-%d %d:%d:%d", dt.tm_mday, dt.tm_mon+1, dt.tm_year , 
                                               dt.tm_hour+2, dt.tm_min, dt.tm_sec);
 
     dt = *(gmtime(&stats.st_mtime));
