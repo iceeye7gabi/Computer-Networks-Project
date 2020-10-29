@@ -1,4 +1,4 @@
-#include <stdlib.h>
+    #include <stdlib.h>
     #include <errno.h>
     #include <unistd.h>
     #include <sys/types.h>
@@ -46,12 +46,9 @@ void mystat(struct stat stats) {
    struct tm dt;
    
    printf("Accese fisier: ");
-   if (stats.st_mode & R_OK) 
-   	printf("read ");
-   if (stats.st_mode & W_OK) 
-   	printf("write ");	
-   if (stats.st_mode & X_OK) 
-   	printf("execute ");
+   if (stats.st_mode & R_OK) printf("read ");
+   if (stats.st_mode & W_OK) printf("write ");	
+   if (stats.st_mode & X_OK) printf("execute ");
    printf("\n");
    		
    printf("Dimensiunea fisierului : %ld", stats.st_size);
@@ -111,7 +108,7 @@ void mystat(struct stat stats) {
                 
                	 if(strcmp(command,"login")==0){
                 	 	printf("Introduceti numele si parola dupa urmatoarea sintaxa\n");
-                	 	printf("USER:Password : ");
+                	 	printf("Username:Password :   ");
                 		scanf("%s",username);
                 		char q[50];                                            
                 		char aux[50];
@@ -149,6 +146,7 @@ void mystat(struct stat stats) {
                		strcpy(answer,"\n");
                		write(sockp[1],answer,sizeof(answer));
                		exit(0);
+               		// dureaza putin mai mult pana se executa comanda myfind
                	
                	}
                //////////////////////////// 
