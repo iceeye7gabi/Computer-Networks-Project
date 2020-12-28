@@ -81,6 +81,8 @@ void raspunde(void * arg) {
       write(tdL.cl, "login", sizeof("login"));
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
+      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0) { continue;}
+      else{
       sql[0] = 0;
       str[0] = 0;
       sprintf(sql, "SELECT username FROM users WHERE username='%s';", nickname);
@@ -102,6 +104,7 @@ void raspunde(void * arg) {
       }
 			else write(tdL.cl, "Username gresit!", sizeof("Username gresit!"));
     }
+    }
 
     else if (strcmp(message, "register") == 0) {
       int tip = 0;
@@ -109,11 +112,14 @@ void raspunde(void * arg) {
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
       read(tdL.cl, & email, sizeof(email));
+      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0 && strcmp(email,"Esti deja logat3!")==0) { continue;}
+      else{
       sql[0] = 0;
       str[0] = 0;
       sprintf(sql, "INSERT INTO users (username,password,type,email) VALUES ('%s','%s',0,'%s');", nickname, password,email);
       database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
       write(tdL.cl, "V-ati inregistrat cu succes!", sizeof("V-ati inregistrat cu succes!"));
+    }
     }
 
     else if(strcmp(message, "turneu") == 0){

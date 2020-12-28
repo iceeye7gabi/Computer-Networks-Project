@@ -111,7 +111,8 @@ int main(int argc, char * argv[]) {
         white_color);
       break;
     }
-    else if (strcmp(message, "login") == 0) {
+    else if (strcmp(message, "login") == 0 )  {
+      if(logged==0){
       printf("Introduceti nickname-ul: ");
       fflush(stdout);
       scanf("%s", & nickname);
@@ -126,8 +127,15 @@ int main(int argc, char * argv[]) {
       printf("%s\n", logare);
       if(strcmp(logare,"V-ati logat! Bine ai venit jucatorule!")==0 || strcmp(logare,"V-ati logat! Bine ai venit administratorule!")==0)
         logged=1;
+      }
+      else {
+        printf("Esti deja logat\n!");
+        write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
+        write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
+      }
     }
     else if (strcmp(message, "register") == 0) {
+      if(logged==0){
       printf("Introduceti nickname-ul: ");
       fflush(stdout);
       scanf("%s", & nickname);
@@ -148,6 +156,12 @@ int main(int argc, char * argv[]) {
 
       read(socket_descriptor, & logare, sizeof(logare));
       printf("%s\n", logare);
+    }
+    else {printf("Esti deja logat!\n");
+    write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
+    write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
+    write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
+    }
     }
 
     else if(strcmp(message,"turneu")==0) {
