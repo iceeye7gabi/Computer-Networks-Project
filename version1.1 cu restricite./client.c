@@ -129,9 +129,11 @@ int main(int argc, char * argv[]) {
         logged=1;
       }
       else {
-        printf("Esti deja logat\n!");
         write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
         write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
+        read(socket_descriptor, & logare, sizeof(logare));
+        printf("%s\n",logare);
+
       }
     }
     else if (strcmp(message, "register") == 0) {
@@ -157,10 +159,11 @@ int main(int argc, char * argv[]) {
       read(socket_descriptor, & logare, sizeof(logare));
       printf("%s\n", logare);
     }
-    else {printf("Esti deja logat!\n");
-    write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
+    else {write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
     write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
-    write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
+    write(socket_descriptor, "Esti deja logat3!", sizeof("Esti deja logat3!"));
+    read(socket_descriptor, & logare, sizeof(logare));
+    printf("%s\n",logare);
     }
     }
 

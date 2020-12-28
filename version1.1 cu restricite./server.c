@@ -81,7 +81,9 @@ void raspunde(void * arg) {
       write(tdL.cl, "login", sizeof("login"));
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
-      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0) { continue;}
+      if((strcmp(nickname,"Esti deja logat1!")==0) && (strcmp(password,"Esti deja logat2!")==0)) {
+          write(tdL.cl, "Esti deja logat!", sizeof("Esti deja logat!"));
+       }
       else{
       sql[0] = 0;
       str[0] = 0;
@@ -112,7 +114,9 @@ void raspunde(void * arg) {
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
       read(tdL.cl, & email, sizeof(email));
-      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0 && strcmp(email,"Esti deja logat3!")==0) { continue;}
+      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0 && strcmp(email,"Esti deja logat3!")==0) {
+          continue;
+       }
       else{
       sql[0] = 0;
       str[0] = 0;
