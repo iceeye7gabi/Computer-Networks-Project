@@ -58,6 +58,7 @@ void raspunde(void * arg) {
   char email[100];
   char sql[100];
   char str[100];
+  char string[100];
 	char type1[]="0";
 	char type2[]="1";
   char * error_message;
@@ -65,7 +66,9 @@ void raspunde(void * arg) {
   struct thData tdL;
   tdL = * ((struct thData * ) arg);
   while (1) {
-    if (read(tdL.cl, & message, sizeof(message)) <= 0) {
+    fflush (stdout);
+    memset(message,0,sizeof(message));
+    if (read(tdL.cl,  message, sizeof(message)) <= 0) {
       // printf("[Thread %d]\n",tdL.idThread);
       //  perror ("Eroare la read() de la client.\n");
       break;
@@ -79,12 +82,14 @@ void raspunde(void * arg) {
 
     else if (strcmp(message, "login") == 0) {
       write(tdL.cl, "login", sizeof("login"));
-      read(tdL.cl, & nickname, sizeof(nickname));
-      read(tdL.cl, & password, sizeof(password));
-      if((strcmp(nickname,"Esti deja logat1!")==0) && (strcmp(password,"Esti deja logat2!")==0)) {
+      memset(nickname,0,sizeof(nickname));memset(password,0,sizeof(password));
+      read(tdL.cl,string,sizeof(string));
+      if((strcmp(string,"nicetry")==0)) {
           write(tdL.cl, "Esti deja logat!", sizeof("Esti deja logat!"));
        }
-      else{
+       else{
+      read(tdL.cl,  nickname, sizeof(nickname));
+      read(tdL.cl,  password, sizeof(password));
       sql[0] = 0;
       str[0] = 0;
       sprintf(sql, "SELECT username FROM users WHERE username='%s';", nickname);
@@ -106,21 +111,34 @@ void raspunde(void * arg) {
       }
 			else write(tdL.cl, "Username gresit!", sizeof("Username gresit!"));
     }
+
+    fflush (stdout);
+    memset(message,0,sizeof(message));
     }
 
     else if (strcmp(message, "register") == 0) {
       int tip = 0;
       write(tdL.cl, "register", sizeof("register"));
-      read(tdL.cl, & nickname, sizeof(nickname));
-      read(tdL.cl, & password, sizeof(password));
-      read(tdL.cl, & email, sizeof(email));
+      memset(nickname,0,sizeof(nickname));memset(password,0,sizeof(password));memset(email,0,sizeof(email));
+      read(tdL.cl,string,sizeof(string));
+      if((strcmp(string,"nicetry")==0)) {
+          write(tdL.cl, "Esti deja logat!", sizeof("Esti deja logat!"));
+       }
+       else{
+      read(tdL.cl,  nickname, sizeof(nickname));
+      read(tdL.cl,  password, sizeof(password));
+      read(tdL.cl,  email, sizeof(email));
       sql[0] = 0;
       str[0] = 0;
       sprintf(sql, "INSERT INTO users (username,password,type,email) VALUES ('%s','%s',0,'%s');", nickname, password,email);
       database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
       write(tdL.cl, "V-ati inregistrat cu succes!", sizeof("V-ati inregistrat cu succes!"));
-
+      fflush (stdout);
+      memset(message,0,sizeof(message));
     }
+    }
+
+
 
     else if(strcmp(message, "turneu") == 0){
         write(tdL.cl, "turneu", sizeof("turneu"));

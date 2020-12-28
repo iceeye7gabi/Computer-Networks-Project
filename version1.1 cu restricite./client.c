@@ -37,6 +37,7 @@ int main(int argc, char * argv[]) {
   char nickname[100];
   char password[100];
   char email[100];
+  char haha[100];
   int type;
   int logged=0;
 
@@ -83,10 +84,11 @@ int main(int argc, char * argv[]) {
 
 
   while (1) {
+    bzero(message,sizeof(message));
     /* citirea mesajului */
     printf("[client]Introduceti o comanda: ");
     fflush(stdout);
-    scanf("%s", & message);
+    scanf("%s",  message);
     fflush(stdin);
 
     //printf("[client] Am citit %d\n",nr);
@@ -99,66 +101,65 @@ int main(int argc, char * argv[]) {
 
     /* citirea raspunsului dat de server
        (apel blocant pina cind serverul raspunde) */
+    bzero(message,sizeof(message));
     if (read(socket_descriptor, & message, sizeof(message)) < 0) {
       perror("[client]Eroare la read() de la server.\n");
       return errno;
     }
 
     /* afisam mesajul primit */
-
+    bzero(nickname,sizeof(nickname));bzero(password,sizeof(password));bzero(logare,sizeof(logare));
     if (strcmp(message, "quit") == 0) {
       printf(blue_color "Ati iesit din aplicatie! O zi buna!\n"
         white_color);
       break;
     }
-    else if (strcmp(message, "login") == 0 )  {
-      if(logged==0){
+    else if ((strcmp(message, "login") == 0) && (logged==0) )  {
+      write(socket_descriptor,"normal",sizeof("normal"));
       printf("Introduceti nickname-ul: ");
       fflush(stdout);
-      scanf("%s", & nickname);
+      scanf("%s",  nickname);
       fflush(stdin);
-      write(socket_descriptor, & nickname, sizeof(nickname));
+      write(socket_descriptor,  nickname, sizeof(nickname));
       printf("Introduceti parola: ");
       fflush(stdout);
-      scanf("%s", & password);
+      scanf("%s",  password);
       fflush(stdin);
-      write(socket_descriptor, & password, sizeof(password));
-      read(socket_descriptor, & logare, sizeof(logare));
+      write(socket_descriptor,  password, sizeof(password));
+      read(socket_descriptor,  logare, sizeof(logare));
       printf("%s\n", logare);
       if(strcmp(logare,"V-ati logat! Bine ai venit jucatorule!")==0 || strcmp(logare,"V-ati logat! Bine ai venit administratorule!")==0)
-        logged=1;
-      }
-      else {
-        write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
-        write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
-        read(socket_descriptor, & logare, sizeof(logare));
-        printf("%s\n",logare);
+      logged=1;}
+        else if ((strcmp(message, "login") == 0 || (strcmp(message, "register") == 0) ) && (logged==1) ){
+        write(socket_descriptor, "nicetry", sizeof("nicetry"));
+        read(socket_descriptor,  haha, sizeof(haha));
+        printf("%s\n",haha);
 
       }
-    }
-    else if (strcmp(message, "register") == 0) {
-      if(logged==0){
+    else if ((strcmp(message, "register") == 0) && (logged==0) )  {
+      write(socket_descriptor,"normal",sizeof("normal"));
       printf("Introduceti nickname-ul: ");
       fflush(stdout);
-      scanf("%s", & nickname);
+      scanf("%s",  nickname);
       fflush(stdin);
-      write(socket_descriptor, & nickname, sizeof(nickname));
+      write(socket_descriptor,  nickname, sizeof(nickname));
 
       printf("Introduceti parola: ");
       fflush(stdout);
-      scanf("%s", & password);
+      scanf("%s",  password);
       fflush(stdin);
-      write(socket_descriptor, & password, sizeof(password));
+      write(socket_descriptor,  password, sizeof(password));
 
       printf("Introduceti email-ul: ");
       fflush(stdout);
-      scanf("%s", & email);
+      scanf("%s",  email);
       fflush(stdin);
-      write(socket_descriptor, & email, sizeof(email));
+      write(socket_descriptor, email, sizeof(email));
 
-      read(socket_descriptor, & logare, sizeof(logare));
+      read(socket_descriptor,  logare, sizeof(logare));
       printf("%s\n", logare);
-    }
+
+
     }
 
     else if(strcmp(message,"turneu")==0) {
