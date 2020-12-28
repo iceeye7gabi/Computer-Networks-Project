@@ -36,6 +36,7 @@ int main(int argc, char * argv[]) {
   char logare[100];
   char nickname[100];
   char password[100];
+  char email[100];
   int type;
 
   /* exista toate argumentele in linia de comanda? */
@@ -129,11 +130,19 @@ int main(int argc, char * argv[]) {
       scanf("%s", & nickname);
       fflush(stdin);
       write(socket_descriptor, & nickname, sizeof(nickname));
+
       printf("Introduceti parola: ");
       fflush(stdout);
       scanf("%s", & password);
       fflush(stdin);
       write(socket_descriptor, & password, sizeof(password));
+
+      printf("Introduceti email-ul: ");
+      fflush(stdout);
+      scanf("%s", & email);
+      fflush(stdin);
+      write(socket_descriptor, & email, sizeof(email));
+
       read(socket_descriptor, & logare, sizeof(logare));
       printf("%s\n", logare);
     }

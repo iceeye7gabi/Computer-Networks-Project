@@ -55,6 +55,7 @@ void raspunde(void * arg) {
   char message[100];
   char nickname[100];
   char password[100];
+  char email[100];
   char sql[100];
   char str[100];
 	char type1[]="0";
@@ -107,9 +108,10 @@ void raspunde(void * arg) {
       write(tdL.cl, "register", sizeof("register"));
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
+      read(tdL.cl, & email, sizeof(email));
       sql[0] = 0;
       str[0] = 0;
-      sprintf(sql, "INSERT INTO users (username,password,type) VALUES ('%s','%s',0);", nickname, password);
+      sprintf(sql, "INSERT INTO users (username,password,type,email) VALUES ('%s','%s',0,'%s');", nickname, password,email);
       database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
       write(tdL.cl, "V-ati inregistrat cu succes!", sizeof("V-ati inregistrat cu succes!"));
     }
