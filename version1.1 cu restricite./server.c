@@ -114,16 +114,12 @@ void raspunde(void * arg) {
       read(tdL.cl, & nickname, sizeof(nickname));
       read(tdL.cl, & password, sizeof(password));
       read(tdL.cl, & email, sizeof(email));
-      if(strcmp(nickname,"Esti deja logat1!")==0 && strcmp(nickname,"Esti deja logat2!")==0 && strcmp(email,"Esti deja logat3!")==0) {
-          continue;
-       }
-      else{
       sql[0] = 0;
       str[0] = 0;
       sprintf(sql, "INSERT INTO users (username,password,type,email) VALUES ('%s','%s',0,'%s');", nickname, password,email);
       database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
       write(tdL.cl, "V-ati inregistrat cu succes!", sizeof("V-ati inregistrat cu succes!"));
-    }
+
     }
 
     else if(strcmp(message, "turneu") == 0){

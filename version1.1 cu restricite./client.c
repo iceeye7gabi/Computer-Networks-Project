@@ -159,12 +159,6 @@ int main(int argc, char * argv[]) {
       read(socket_descriptor, & logare, sizeof(logare));
       printf("%s\n", logare);
     }
-    else {write(socket_descriptor, "Esti deja logat1!", sizeof("Esti deja logat1!"));
-    write(socket_descriptor, "Esti deja logat2!", sizeof("Esti deja logat2!"));
-    write(socket_descriptor, "Esti deja logat3!", sizeof("Esti deja logat3!"));
-    read(socket_descriptor, & logare, sizeof(logare));
-    printf("%s\n",logare);
-    }
     }
 
     else if(strcmp(message,"turneu")==0) {
