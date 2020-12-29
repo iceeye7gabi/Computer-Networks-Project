@@ -59,6 +59,7 @@ void raspunde(void * arg) {
   char string[100];
 	char type1[]="0";
 	char type2[]="1";
+  char tabel[1000];
   int tip_utilizator=0;
   char * error_message;
   int database_descriptor = sqlite3_open("database", & database);;
@@ -166,6 +167,22 @@ void raspunde(void * arg) {
       }
 
     } else if( (strcmp(message, "register_tournament") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "register_tournament2", sizeof("register_tournament2"));}
+
+
+    else if( (strcmp(message, "history") == 0) && (tip_utilizator==1) ) {
+          write(tdL.cl, "history", sizeof("history"));
+          memset(tabel,0,sizeof(tabel));
+          sql[0] = 0;
+          str[0] = 0;
+          sprintf(sql, "SELECT * FROM istoric_partide;");
+          database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+          strcpy(tabel,str);
+          write(tdL.cl,tabel,sizeof(tabel));
+
+
+    } else if( (strcmp(message, "history") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "history2", sizeof("history2"));}
+
+
 
 		else {
       write(tdL.cl, "Command not found!", sizeof("Command not found!"));

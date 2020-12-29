@@ -41,6 +41,7 @@ int main(int argc, char * argv[]) {
   int type;
   int logged=0;
   char numeTurneu[100];char joc[100];char jucatori[100];char regula[100];char extragerea[100];
+  char tabel[1000];
 
   /* exista toate argumentele in linia de comanda? */
   if (argc != 3) {
@@ -203,6 +204,21 @@ int main(int argc, char * argv[]) {
     } else if ((strcmp(message, "register_tournament2") == 0) && (logged==0) ){
       printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
     }
+
+    else if ((strcmp(message, "history") == 0) && (logged==1) ){
+          //printf("salut!");
+          read(socket_descriptor,  tabel, sizeof(tabel));
+          printf("%s",tabel);
+          fflush(stdout);
+
+    } else if ((strcmp(message, "history2") == 0) && (logged==1) ){
+      printf("Trebuie sa fiti administrator!\n");
+    } else if ((strcmp(message, "history2") == 0) && (logged==0) ){
+      printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+    }
+
+
+
 
     else if (strcmp(message, "Command not found!") == 0) {
       printf(red_color "Comanda nu exista!\n"
