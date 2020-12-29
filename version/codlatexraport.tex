@@ -1,0 +1,197 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\title{Raport Proiect Retele de Calculatoare  Championship \\ Tema2}
+\author{Constantinescu M.G. George-Gabriel \\
+Grupa E3, Anul II}
+\date{10 Decembrie 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducere}
+
+\quad Scopul acestui raport este  sa prezinte cat mai multe detalii in legatura cu proiectul pe care doresc sa il realizez in cadrul disciplinei Retele de calculatoare[1] din cadrul Facultatii de Informatica, Universitatea Alexandru Ioan Cuza Iasi. Am ales proiectul Championship (B) , un proiect de tipul B.[4]
+
+Acest proiect doreste sa reprezinta o aplicatie de tipul client-server care simuleaza o platforma de tipul ESL(Electronic Sports League) , prin care se pot inregistra anumite campionate de jocuri electronice la care pot participa mai multe echipe pe diferite categorii de jocuri.
+
+Functionalitatile majore ale acestei aplicatii sunt: 
+\begin{itemize}
+    \item inregistrarea utilizatorilor(atat cei obisnuiti cat si administratorii);
+    \item utilizatorii pot vizualiza informatii despre campionate si se pot inregistra daca doresc;
+    \item inregistrarea unui campionat;
+    \item specificarea pentru fiecare campionat a jocului, numarul de jucatori, diferite reguli si structura campionatului(meciuri de tipul BO1 sau BO2 etc.);
+    \item modul de extragere al partidelor;
+    \item inregistrarea unei echipe sau unui jucator intr-un campionat, ulterior acesta fiind instiinat prin email ca a facut acest lucru si daca a fost acceptat sau nu;
+    \item jucatorul va primi informatii aditionale via email despre partidele sale (ora, adversarul, s.a.m.d);
+    \item jucatorul are posibilitatea de a reprograma o partida;
+    \item administratorii pot vedea un istoric al partidelor jucate;
+\end{itemize}
+
+\section{Motivatie}
+\quad Motivatia pentru care a fost ales acest proiect este aceea ca sunt obisnuit sa interactionez cu o aplicatie de tipul acesta. In trecut, am participat la destul de multe campionate de Dota2 alaturi de o echipa internationala si am o idee generala asupra acestui tip de aplicatie. 
+
+Astfel, sunt "obisnuit" cu functionalitatile acestui tip de proiect: inregistrarea unei echipe, participarea la un anumit campionat, setarea datei si orei inceperii unei partide s.a.m.d .
+
+\section{Tehnologii utilizate in aplicatie}
+\quad Pentru realizarea acestui proiect si a conexiunii dintre client si server voi folosi un protocol de comunicare  de tipul TCP/IP concurent, astfel incat sa se poate conecta la server in acelasi timp cat mai multi utilizatori.
+[2][3]
+
+Motivatie pentru care am ales acest tip de comunicare este ca TCP/IP ofera o viteza destul de buna pentru schimbul de informatii(este "reliable"), acest aspect fiind foarte important intr-o astfel de aplicatie deoarece daca ne-am pune in ipostaza jucatorilor, dorim sa obtinem informatii cat mai rapid in legatura cu anumite campionate in care ne-am inscris.
+
+Odata ce un client se va conecta la serverul aplicatiei, pentru acesta se va crea un thread cu un id specific, unde serverul asteapta anumite comenzi specifice aplicatiei de la client, le prelucreaza si ofera inapoi un raspuns pe baza comenzii pe care a introdus-o utilizatorul.[2][3]
+\section{Arhitectura aplicatiei}
+\quad Pentru a oferi o experienta de utilizare cat mai buna dar si o implementare cat mai eficienta, in proiect se va o realiza o legatura foarte stransa intre o baza de date in SQLITE si programul in sine. In baze de date voi stoca mai multe tabele care vor contine urmatoarele: 
+
+\begin{itemize}
+    \item o tabela va contine username-ul utilizatorului, tipul de utilizator(daca este simplu jucator sau administrator), email-ul fiecaruia dar si o parola;
+    \item o tabela va contine numele si data de incepere a fiecarui campionat, jocul asociat campionatului, numarul de jucatori, diferite reguli organizatorice si modul de extragere al partidelor;
+    \item o tabela va contine echipele inscrise la anumite campionate;
+    \item o tabela va contine istoricul partidelor jucate si scorul aferent;
+\end{itemize}
+\quad In functie de alte aspecte ale aplicatiei, o sa se implementeze si alte tabele cu scopul de a face o experienta de utilizare cat mai placuta si eficienta (de exemplu: o tabela cu componenta echipelor s.a.m.d.).
+
+Astfel, in functiei de fiecare comanda care va fi introdusa de fiecare utilizator in parte, se va returna raspunsul care corespunde interogarii specifice in limbajul SQL asociate comenzii introduse. 
+
+O situatie concreta: un jucator cu username-ul X doreste sa se conecteze la aplicatie. Acesta cand va utiliza comanda de login, aplicatia va cauta in baza de date, in tabela cu toti utilizatori inregistrati numele si parola acestuia. Daca le gaseste, il va lasa sa foloseasca si celelalte comenzi; Daca nu, va returna un mesaj de tipul: "username sau parola gresite / cont neinregistrat".
+
+Mai jos se pot vedea mai multe diagrame in care se prezinta arhitectura aplicatiei. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8.25cm]{diagrama_register.png}
+\end{figure}
+\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=8.5cm]{diagrama_login.png}
+\end{figure}
+\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{diagrama_comenzi_utilizator.png}
+\end{figure}
+\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{diagrama_comenzi_administrator.png}
+\end{figure}
+\\
+\newpage
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{diagrama_centrala.png}
+\end{figure}
+
+\textbf{Observatie:} Aceste diagrame nu reprezinta varianta finala a proiectului, ulterior voi adauga si alte functionalitati aplicatiei.
+
+\section{Detalii de implementare}
+\quad Detaliile de implementare sunt intr-o stransa legatura cu diagramele de mai sus.
+
+Pentru stocarea informatiilor am construit in SQLITE o baza de date formata din mai multe tabele, fiecare pentru o categorie specifica: utilizatori existenti, istoric al meciurilor, istoric al compionatelor, s.a.m.d .
+
+\subsection{Functia de inregistrare}
+\quad Scopul functiei de inregistrare este de a inregistra un utilizator in cadrul aplicatie, fie ca acesta este un utilizator obisnuit sau un administrator in functie de anumiti parametrii amintiti in diagramele de mai sus: username, tipul de utilizator, parola si email-ul. Ulterior acesta informatii vor fi stocate in tabela SQL numita inregistrareSQL. In caz ca username-ul/email-ul se regasesc deja in tabela sau tipul de utilizator este unul invalid, programul afiseaza un mesaj de eroare, care il indruma pe utilizator in 2 directii: ori sa se inregistreze cu alte date ori/sa se logheze cu datele deja existente sau sa iasa din aplicatie.
+
+\subsection{Functia de logare}
+\quad Scopul functiei de login este de a i se permite  unui utilizator care este deja inregistrat in baza de date sa se conecteze la aplicatie cu contul sau. In caz ca username-ul/email-ul sau parola sunt incorecte, programul afiseaza un mesaj de eroare, care il indruma pe utilizator sa reintroduca din nou datele de conectare cu atentie, ori sa isi creeze un cont in caz ca nu are unul sau sa iasa din aplicatie.
+
+Odata ce utilizatorul s-a conectat cu contul sau la aplicatie, in acest moment ii este permis sa foloseasca si restul comenzilor in functie de tipul e utilizator(utilizator obisnuit sau admin).
+
+\subsection{Functia de inregistrare a unui campionat}
+
+\quad Scopul acestei comenzi este de a crea un nou campionat la care pot participa utilizatori obisnuiti. Aceasta comanda poate fi utilizata doar de administratori, ei avand drepturi pentru acest lucru. Odata cu apelul functiei, administratorul trebuie deasemnea sa precizeze si detalii referitoare la acest campionat: specificarea jocului, a numarului de jucatori, diferite reguli, structura campionatului s.a.m.d. .
+
+\subsection{Functia de inregistrare a unui utilizator obisnuit/a unei echipe intr-un campionat}
+
+\quad Scopul acestei comenzi este de a inregistra un utilizator obisnuit intr-un campionat deja existent. Aceasta comanda poate fi utilizata doar de utilizatori obisnuiti pentru a se inscrie pe ei insasi. Odata ce este inscris, utilizatorul va fi instiintat via email daca a fost acceptat pentru acest campionat si va primi informatii aditionale despre campionatul in care a fost inscris. In caz ca numele campionatului este introdus gresit sau campionatul nu exista, programul va afisa un mesaj de eroare ce indruma utilizatorul sa introduca din nou numele campionatului sau sa revina in meniul principal.
+
+\subsection{Functia de reprogramare a unei sesiuni de joc}
+
+\quad Scopul acestei comenzi este de a reprograma o partida de joc in caz ca utilizatorul nu poate participa la aceasta. Aceasta comanda poate fi folosita doar de utilizatori obisnuiti si astfel le este permis sa amane o anumita partida. In caz ca numele campionatului in care are loc partida este scris gresit sau nu exista, programul va afisa un mesaj de eroare ce indruma utilizatorul sa introduca din nou numele campionatului sau sa revina in meniul principal. In caz ca noua data la care este programata partida este neconforma, deasemenea programul va afisa un mesaj de eroare ce indruma utilizatorul sa introduca din nou datele pentru reprogramare sau sa revina in meniul principal.
+
+\subsection{Functia de afisare a unui istoric al partidelor}
+
+\quad Scopul acestei comenzi este de a se afisa pe ecran un istoric al partidelor deja terminate intre jucatorii obisnuiti. Aceasta comanda poate fi folosita doar de administratori.
+
+\subsection{Functia de afisare a informatiilor despre campionate recente}
+
+\quad Scopul acestei comenzi este de a se afisa informatii relevante despre anumite campionate: numele campionatului, tipul de joc, diferite reguli, structura campionatului etc. . Aceasta comanda poate fi utilizata atat de utilizatorii obisnuiti cat si de adminstratori. Ulterior, utilizatorii obisnuiti care sunt interesati de un anumit campionat, se pot inscrie si pot participa la acesta. 
+
+\subsection{Functia de afisare a meniului de ajutor}
+
+\quad Scopul acestei comenzi este de a afisa informatii referitoare la comenzile care pot fi introduse in functie de tipul de utilizator. Aceasta comanda poate fi utilizata atat de utilizatorii obisnuiti cat si de adminstratori. Aceasta comanda poate fi utilizata doar in momentul in care utilizatorul se afla in meniul principal.
+
+\subsection{Functia de iesire din aplicatie}
+
+\quad Scopul acestei comenzi este de a deconecta utilizatorul de la aplicatie, astfel se simuleaza o comanda de tipul "logout". Aceasta comanda poate fi utilizata atat de utilizatorii obisnuiti cat si de adminstratori. In momentul in care aceasta comanda este utilizata, conexiunea dintre serverul aplicatiei si thread-ul specific fiecarui client este incetata.
+
+
+
+
+
+\subsection{Observatii}
+
+\quad Pe langa comenzile specificate mai sus, pe parcursul implementarii acestui proiect se vor mai adauga functii suplimentare care sa eficientizeze experienta de utilizare a acestei aplicatii. Ca de exemplu, in locul inregistrarii unui jucator la un campionat, sa se permita inregistrarea unei echipe cu mai multi jucatori, iar pentru fiecare dintre acestia sa se afiseze informatii referitoare la strategii de joc preferate dar si un rating de tipul Win-Lose, astfel putand sa se realizeze o ierarhie a jucatorilor/echipelor in functie de meciurile pierdute si castigate.
+\newpage
+\quad Ca exemplu, in poza de mai jos este exemplificat modul cum ar trebui sa functioneze comanda de login: 
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{interogareSQL.png}
+\end{figure}
+
+\section{Concluzii}
+
+\quad La nivelul aplicatiei, se pot realiza anumite optimizari astfel incat experienta de utilizare a aplicatiei, atat in ipostaza unui utilizator obisnuit(jucator) cat si din cea a unui adminstrator sa fie una mai placuta. 
+
+De exemplu, in cazul repogramarii unei partide, nu doar jucatorul care doreste sa o reprogrameze trebuie sa fie de acord. Stim ca intr-un meci de tipul acesta, exista cel putin un adversar iar noi nu stim daca acesta va fi de acord cu mutarea datei partidei. 
+
+Astfel, o posibila imbunatatire ar putea fi constituita dintr-un sistem de checking astfel: jucatorul/echipa care doreste sa reprogrameze un meci va cere acest lucru unui adminstrator cu o noua data a partidei. 
+
+Administratorul are datoria de a transmite adversarilor acest lucru si datele legate de noua zi in care se va desfasura partida. Acestia pot decide daca sunt de acord sau nu cu modificarea. In caz ca sunt de acord, partida se va reprograma cu noua data. 
+In caz ca nu, adeversarii propun o noua data care va fi transmisa prin adminstrator la jucatorul/echipa initiala. 
+
+In caz ca nici in acest moment nu se poate realiza o amanare a partidei, o fereastra de chat se va deschide intre cei doi jucatori/capitani de echipa a celor doua echipe in care vor discuta despre o noua data a disputarii meciului. In caz ca nu se poate realiza acest lucru, adminstratorul va oferi castig de cauza echipei adverse si meciul va fi declarat anulat prin neparticiparea primei echipe.
+
+O imbunatatire la nivelul inregistrarii administratorilor este ca inregistrarea acestora sa nu se poate face de catre un utilizator obisnuit, ci de un adminstrator care este deja conectat la serverul aplicatiei. Astfel putem evita acel caz atunci cand un utilizator obisnuit ar putea produce haos in aplicatia noastra si ar putea corupe informatii referitoare la scorurile partidelor sau la campionate. 
+
+O alta imbunatatire majora care ar putea duce la sporirea functionalitatii acestei aplicatii este ca atat administratorii cat si ceilalti jucatori din acel campionat sa fie notificati via email atunci cand o partida este incheiata. In mail sa se regaseasca numele jucatorilor/echipelor care au participat la meci, campionatul cu toate detaliile aferente si scorul partidei.
+
+O imbunatatire la nivelul aplicatiei o poate constitui si schimbarea protocolului de transmitere a informatiilor. In loc e TCP/IP, pentru o viteza mai buna se poate folosi UDP/IP dar in acest caz stim ca  retransmiterea pachetelor de date pierdute nu este posibila ca la TCP/IP.[6]
+\section{Bibliografie}
+
+\quad 
+
+[1]\href{https://profs.info.uaic.ro/~computernetworks/index.php} {Site-ul disciplinei}
+
+
+
+[2]\href{https://profs.info.uaic.ro/~computernetworks/files/NetEx/S12/ServerConcThread/servTcpConcTh2.c} {Programul de plecare pentru server.c}
+
+[3]\href{https://profs.info.uaic.ro/~computernetworks/files/NetEx/S12/ServerConcThread/cliTcpNr.c} {Programul de plecare pentru client.c}
+
+[4]\href{https://profs.info.uaic.ro/~computernetworks/ProiecteNet2020.php}{Lista proiectelor}
+
+[5]\href{https://play.eslgaming.com/global}{Platforma ESL - Electronic Sports League}
+
+[6]\href{https://www.guru99.com/tcp-vs-udp-understanding-the-difference.html#:~:text=TCP}{TCP vs. UDP}
+
+[7]\href{https://www.sqlite.org/index.html}{SQLite Website}
+
+[8]\href{https://stackoverflow.com/questions/28969543/fatal-error-sqlite3-h-no-such-file-or-directory/31764947}{How to install SQLite - fatal error}
+
+[9]\href{https://www.youtube.com/watch?v=YVNGUqARjHg&ab_channel=AsimCode}{Tutorial SQLite}
+
+[10]\href{http://zetcode.com/db/sqlitec/}{SQLite C Tutorial}
+
+[11]\href{https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm}{How to design the callback function regarding SQLite communication with the server + others things}
+
+[11]\href{https://profs.info.uaic.ro/~bd/wiki/index.php/Pagina_principal%C4%83}{Site-ul laboratorului BD}
+
+[12]\href{https://online.visual-paradigm.com/drive/#diagramlist:proj=0&new=HowHowDiagram}{Site for drawing diagrams}
+
+[12]\href{https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal}{How to color lines in linux terminal}
+\end{document}
