@@ -205,6 +205,8 @@ int main(int argc, char * argv[]) {
       printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
     }
 
+
+
     else if ((strcmp(message, "history") == 0) && (logged==1) ){
           //printf("salut!");
           read(socket_descriptor,  tabel, sizeof(tabel));
@@ -214,6 +216,16 @@ int main(int argc, char * argv[]) {
     } else if ((strcmp(message, "history2") == 0) && (logged==1) ){
       printf("Trebuie sa fiti administrator!\n");
     } else if ((strcmp(message, "history2") == 0) && (logged==0) ){
+      printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+    }
+
+    else if ((strcmp(message, "show_tournaments") == 0) && (logged==1) ){
+          //printf("salut!");
+          read(socket_descriptor,  tabel, sizeof(tabel));
+          printf("%s",tabel);
+          fflush(stdout);
+
+    }  else if ((strcmp(message, "show_tournaments2") == 0) && (logged==0) ){
       printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
     }
 

@@ -195,6 +195,29 @@ void raspunde(void * arg) {
 
 
 
+    else if( (strcmp(message, "show_tournaments") == 0) && ((tip_utilizator==1) || (tip_utilizator==0) ) ) {
+          write(tdL.cl, "show_tournaments", sizeof("show_tournaments"));
+          memset(tabel,0,sizeof(tabel));
+          sql[0] = 0;
+          str[0] = 0;
+          sprintf(sql, "select * from tournaments;");
+          database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+          str[strlen (str)-1]=0;
+        //  printf("%s",str);
+          sprintf(tabel,"%s",str);
+          char msgout[10000];
+          strcpy(msgout,tabel);
+          strcpy(msgout,msgout+68);
+          int length_msgout= strlen(tabel);
+          printf("%s",msgout);
+          write(tdL.cl,msgout,sizeof(msgout));
+
+
+    }
+
+
+
+
 		else {
       write(tdL.cl, "Command not found!", sizeof("Command not found!"));
     }
