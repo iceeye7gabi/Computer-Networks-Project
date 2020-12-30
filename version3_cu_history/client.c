@@ -238,6 +238,24 @@ int main(int argc, char * argv[]) {
 
     }
 
+    else if ((strcmp(message, "participate_tournament") == 0) && (logged==1) ) {
+        write(socket_descriptor,"nicetry",sizeof("nicetry"));
+
+
+        read(socket_descriptor,  logare, sizeof(logare));
+        printf("%s\n", logare);
+        fflush(stdout);
+    } else if ((strcmp(message, "participate_tournament2") == 0) && (logged==1) ){
+      printf("Trebuie sa fiti jucator!\n");
+    } else if ((strcmp(message, "participate_tournament") == 0) && (logged==0) ){
+      write(socket_descriptor,"trynice",sizeof("trynice"));
+      read(socket_descriptor,  logare, sizeof(logare));
+      printf("%s\n", logare);
+      fflush(stdout);
+    }
+
+
+
 
 
 

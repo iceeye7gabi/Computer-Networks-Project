@@ -211,9 +211,29 @@ void raspunde(void * arg) {
           int length_msgout= strlen(tabel);
           printf("%s",msgout);
           write(tdL.cl,msgout,sizeof(msgout));
-
-
     }
+
+
+
+    else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==0)   ) {
+        write(tdL.cl, "participate_tournament", sizeof("participate_tournament"));
+        read(tdL.cl,string,sizeof(string));
+        if((strcmp(string,"nicetry")==0) ) {
+          write(tdL.cl, "Ati creat turneul cu succes!", sizeof("Ati creat turneul cu succes!"));
+          fflush (stdout);
+          memset(message,0,sizeof(message));
+         }
+         else if((strcmp(string,"trynice")==0)){
+        write(tdL.cl, "Trebuie sa va logati pentru a folosi aceasta comanda!", sizeof("Trebuie sa va logati pentru a folosi aceasta comanda!"));
+      }
+
+    } else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==1) ) {  write(tdL.cl, "participate_tournament2", sizeof("participate_tournament2"));}
+
+
+
+
+
+
 
 
     else if (strcmp(message, "help") == 0) {
