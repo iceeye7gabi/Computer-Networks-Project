@@ -224,12 +224,16 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "show_tournaments") == 0) && (logged==1) ){
           //printf("salut!");
+          write(socket_descriptor,"nicetry",sizeof("nicetry"));
           read(socket_descriptor,  tabel, sizeof(tabel));
           printf("%s",tabel);
           fflush(stdout);
 
-    }  else if ((strcmp(message, "show_tournaments2") == 0) && (logged==0) ){
-      printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+    }  else if ((strcmp(message, "show_tournaments") == 0) && (logged==0) ){
+      write(socket_descriptor,"trynice",sizeof("trynice"));
+      read(socket_descriptor,  logare, sizeof(logare));
+      printf("%s\n", logare);
+      fflush(stdout);
     }
 
 

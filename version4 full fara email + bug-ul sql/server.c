@@ -198,7 +198,9 @@ void raspunde(void * arg) {
 
     else if( (strcmp(message, "show_tournaments") == 0) && ((tip_utilizator==1) || (tip_utilizator==0) ) ) {
           write(tdL.cl, "show_tournaments", sizeof("show_tournaments"));
+          read(tdL.cl,string,sizeof(string));
           memset(tabel,0,sizeof(tabel));
+          if((strcmp(string,"nicetry")==0) ) {
           sql[0] = 0;
           str[0] = 0;
           sprintf(sql, "select * from tournaments;");
@@ -212,6 +214,10 @@ void raspunde(void * arg) {
           int length_msgout= strlen(tabel);
           printf("%s",msgout);
           write(tdL.cl,msgout,sizeof(msgout));
+      }
+      else if((strcmp(string,"trynice")==0)){
+     write(tdL.cl, "Trebuie sa va logati pentru a folosi aceasta comanda!", sizeof("Trebuie sa va logati pentru a folosi aceasta comanda!"));
+   }
     }
 
 
