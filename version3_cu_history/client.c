@@ -241,6 +241,11 @@ int main(int argc, char * argv[]) {
     else if ((strcmp(message, "participate_tournament") == 0) && (logged==1) ) {
         write(socket_descriptor,"nicetry",sizeof("nicetry"));
 
+        printf("Introduceti numele turneului la care doriti sa participati: ");
+        fflush(stdout);
+        scanf("%s",  numeTurneu);
+        fflush(stdin);
+        write(socket_descriptor,  numeTurneu, sizeof(numeTurneu));
 
         read(socket_descriptor,  logare, sizeof(logare));
         printf("%s\n", logare);

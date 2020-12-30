@@ -218,8 +218,18 @@ void raspunde(void * arg) {
     else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==0)   ) {
         write(tdL.cl, "participate_tournament", sizeof("participate_tournament"));
         read(tdL.cl,string,sizeof(string));
+        memset(nameTournament,0,sizeof(nameTournament));
         if((strcmp(string,"nicetry")==0) ) {
-          write(tdL.cl, "Ati creat turneul cu succes!", sizeof("Ati creat turneul cu succes!"));
+          read(tdL.cl,  nameTournament, sizeof(nameTournament));
+          sql[0] = 0;
+          str[0] = 0;
+          sprintf(sql, "SELECT * FROM tournaments WHERE Nume_turneu='%s';", nameTournament);
+          database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+          str[strlen (str)-1]=0;
+        //  printf("%s",str);
+          if(strlen(str)>2)
+          write(tdL.cl, "Sunteti inscris!", sizeof("Sunteti inscris!"));
+          else write(tdL.cl, "Ne pare rau dar campionatul la care v-ati inscris nu exista!", sizeof("Ne pare rau dar campionatul la care v-ati inscris nu exista!"));
           fflush (stdout);
           memset(message,0,sizeof(message));
          }
