@@ -227,8 +227,13 @@ void raspunde(void * arg) {
           database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
           str[strlen (str)-1]=0;
         //  printf("%s",str);
-          if(strlen(str)>2)
-          write(tdL.cl, "Sunteti inscris!", sizeof("Sunteti inscris!"));
+          if(strlen(str)>2){
+            sql[0] = 0;
+            str[0] = 0;
+            sprintf(sql, "INSERT INTO users_registered (username,numeTournament) VALUES ('%s','%s');", nickname, nameTournament);
+            database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+            write(tdL.cl, "Sunteti inscris!", sizeof("Sunteti inscris!"));
+        }
           else write(tdL.cl, "Ne pare rau dar campionatul la care v-ati inscris nu exista!", sizeof("Ne pare rau dar campionatul la care v-ati inscris nu exista!"));
           fflush (stdout);
           memset(message,0,sizeof(message));
