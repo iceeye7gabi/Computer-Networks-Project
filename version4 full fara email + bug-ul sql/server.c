@@ -176,20 +176,19 @@ void raspunde(void * arg) {
 
     else if( (strcmp(message, "history") == 0) && (tip_utilizator==1) ) {
           write(tdL.cl, "history", sizeof("history"));
-          memset(tabel,0,sizeof(tabel));
-          sql[0] = 0;
-          str[0] = 0;
-          sprintf(sql, "select * from istoric_partide;");
-          database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
-          str[strlen (str)-1]=0;
-        //  printf("%s",str);
-          sprintf(tabel,"%s",str);
-          char msgout[10000];
-          strcpy(msgout,tabel);
-          strcpy(msgout,msgout+55);
-          int length_msgout= strlen(tabel);
-          printf("%s",msgout);
-          write(tdL.cl,msgout,sizeof(msgout));
+          read(tdL.cl,string,sizeof(string));
+          if(strcmp(string,"nicetry")==0){
+            sql[0] = 0;
+            str[0] = 0;
+            sprintf(sql,"select * from istoricpartide;");
+            database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+            char string2[10000];
+            sprintf(string2,"%s",str);
+          //  printf("%s",string2);
+            write(tdL.cl, string2, sizeof(string2));
+          } else if(strcmp(string,"trynice")==0) {
+            write(tdL.cl, "Trebuie sa fii logat!", sizeof("Trebuie sa fii logat!"));
+          }
 
 
     } else if( (strcmp(message, "history") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "history2", sizeof("history2"));}
@@ -205,15 +204,10 @@ void raspunde(void * arg) {
           str[0] = 0;
           sprintf(sql, "select * from tournaments;");
           database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
-          str[strlen (str)-1]=0;
-        //  printf("%s",str);
-          sprintf(tabel,"%s",str);
-          char msgout[10000];
-          strcpy(msgout,tabel);
-          strcpy(msgout,msgout+220);
-          int length_msgout= strlen(tabel);
-          printf("%s",msgout);
-          write(tdL.cl,msgout,sizeof(msgout));
+          char string2[10000];
+          sprintf(string2,"%s",str);
+        //  printf("%s",string2);
+          write(tdL.cl,string2,sizeof(string2));
       }
       else if((strcmp(string,"trynice")==0)){
      write(tdL.cl, "Trebuie sa va logati pentru a folosi aceasta comanda!", sizeof("Trebuie sa va logati pentru a folosi aceasta comanda!"));
@@ -237,7 +231,7 @@ void raspunde(void * arg) {
           if(strlen(str)>2){
             sql[0] = 0;
             str[0] = 0;
-            sprintf(sql, "INSERT INTO users_registered (username,numeTournament) VALUES ('%s','%s');", nickname, nameTournament);
+            sprintf(sql, "INSERT INTO usersregistered (username,numeTournament) VALUES ('%s','%s');", nickname, nameTournament);
             database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
             write(tdL.cl, "Sunteti inscris!", sizeof("Sunteti inscris!"));
         }
@@ -276,7 +270,7 @@ void raspunde(void * arg) {
             read(tdL.cl,  date, sizeof(date));
             sql[0] = 0;
             str[0] = 0;
-            sprintf(sql, "UPDATE partide_curente SET Data='%s' WHERE Turneu='%s' AND ( Player1='%s' OR Player2='%s' );", date,nameTournament,nickname,nickname);
+            sprintf(sql, "UPDATE partidecurente SET Data='%s' WHERE Turneu='%s' AND ( Player1='%s' OR Player2='%s' );", date,nameTournament,nickname,nickname);
             database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
             write(tdL.cl, "Ati modificat cu succes data partidei!", sizeof("Ati modificat cu succes data partidei!"));
         }

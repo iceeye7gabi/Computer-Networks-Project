@@ -209,15 +209,18 @@ int main(int argc, char * argv[]) {
 
 
     else if ((strcmp(message, "history") == 0) && (logged==1) ){
-          //printf("salut!");
-          read(socket_descriptor,  tabel, sizeof(tabel));
-          printf("%s",tabel);
+          write(socket_descriptor,"nicetry",sizeof("nicetry"));
+          char table[10000];
+          read(socket_descriptor,&table,sizeof(table));
+          printf("%s\n",table);
           fflush(stdout);
 
-    } else if ((strcmp(message, "history2") == 0) && (logged==1) ){
-      printf("Trebuie sa fiti administrator!\n");
-    } else if ((strcmp(message, "history2") == 0) && (logged==0) ){
-      printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+    } else if( (strcmp(message,"history2")==0) && (logged==0) ){
+        printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+
+    } else if( (strcmp(message,"history2")==0) && (logged==1) ){
+        printf("Trebuie sa fiti administrator!\n");
+
     }
 
 
