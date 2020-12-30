@@ -219,6 +219,8 @@ int main(int argc, char * argv[]) {
       printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
     }
 
+
+
     else if ((strcmp(message, "show_tournaments") == 0) && (logged==1) ){
           //printf("salut!");
           read(socket_descriptor,  tabel, sizeof(tabel));
@@ -227,6 +229,13 @@ int main(int argc, char * argv[]) {
 
     }  else if ((strcmp(message, "show_tournaments2") == 0) && (logged==0) ){
       printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+    }
+
+
+    else if (strcmp(message, "help") == 0){
+        printf("HEEEEEEEEEEEEEEEEELP\n"); // de terminat aici !!
+        fflush(stdout);
+
     }
 
 

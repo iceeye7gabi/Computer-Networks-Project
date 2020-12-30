@@ -207,7 +207,7 @@ void raspunde(void * arg) {
           sprintf(tabel,"%s",str);
           char msgout[10000];
           strcpy(msgout,tabel);
-          strcpy(msgout,msgout+68);
+          strcpy(msgout,msgout+220);
           int length_msgout= strlen(tabel);
           printf("%s",msgout);
           write(tdL.cl,msgout,sizeof(msgout));
@@ -215,6 +215,10 @@ void raspunde(void * arg) {
 
     }
 
+
+    else if (strcmp(message, "help") == 0) {
+          write(tdL.cl, "help", sizeof("help"));
+        }
 
 
 
