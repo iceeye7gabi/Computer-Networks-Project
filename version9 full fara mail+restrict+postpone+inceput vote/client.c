@@ -292,6 +292,28 @@ int main(int argc, char * argv[]) {
     }
 
 
+
+
+    else if ((strcmp(message, "top_votes") == 0) && (logged==1) ){
+          //printf("salut!");
+          write(socket_descriptor,"nicetry",sizeof("nicetry"));                     //comanda afisare turnee
+          read(socket_descriptor,  tabel, sizeof(tabel));
+          printf("%s",tabel);
+          fflush(stdout);
+
+    }  else if ((strcmp(message, "top_votes") == 0) && (logged==0) ){
+      write(socket_descriptor,"trynice",sizeof("trynice"));
+      read(socket_descriptor,  logare, sizeof(logare));
+      printf("%s\n", logare);
+      fflush(stdout);
+    }
+
+
+
+
+
+
+
     else if (strcmp(message, "help") == 0){
         printf("\n\n                       Mai jos vei gasi o lista cu comenzile pe care le poti folosi:\n");
         printf("1)Comanda register:\n   -Iti permite sa iti creezi un cont in aplicatie.\n");// de terminat aici !!                      //comanda meniu de ajutor

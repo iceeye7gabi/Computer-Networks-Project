@@ -259,6 +259,35 @@ void raspunde(void * arg) {
 
 
 
+
+    else if( (strcmp(message, "top_votes") == 0) && ((tip_utilizator==1) || (tip_utilizator==0) ) ) {
+          write(tdL.cl, "top_votes", sizeof("top_votes"));
+          read(tdL.cl,string,sizeof(string));
+          memset(tabel,0,sizeof(tabel));
+          if((strcmp(string,"nicetry")==0) ) {
+          sql[0] = 0;
+          str[0] = 0;
+          sprintf(sql, "select username,votes from users ORDER BY votes DESC;");
+          database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+          char string2[10000];
+          sprintf(string2,"%s",str);
+        //  printf("%s",string2);
+          write(tdL.cl,string2,sizeof(string2));
+      }
+      else if((strcmp(string,"trynice")==0)){
+     write(tdL.cl, "Trebuie sa va logati pentru a folosi aceasta comanda!", sizeof("Trebuie sa va logati pentru a folosi aceasta comanda!"));
+   }
+    }
+
+
+
+
+
+
+
+
+
+
     else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==0)   ) {
         write(tdL.cl, "participate_tournament", sizeof("participate_tournament"));
         read(tdL.cl,string,sizeof(string));
