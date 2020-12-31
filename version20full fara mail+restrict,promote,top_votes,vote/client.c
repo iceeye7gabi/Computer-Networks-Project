@@ -378,6 +378,25 @@ int main(int argc, char * argv[]) {
         printf("\n   -Probabil stii despre aceasta comanda deja din meniul de inceput :D . ");
         printf(red_color" \n   -REMINDER: Aceasta comanda este specifica atat jucatorilor cat si administratorilor!\n\n"white_color);
 
+        printf("10)Comanda restrict:\n   -Iti permite sa restrictionezi accesul unui utilizator la aplicatie.\n");// de terminat aici !!                      //comanda meniu de ajutor
+        printf("   -Odata ce ai introdus comanda de la tastatura, o sa fii nevoit sa introduci numele utilizatorului pe care doresti sa il restrictionezi.");
+        printf("\n   -Dupa ce ai introdus numele, vei primi un mesaj de succes iar utilizatorul pe care l-ai blocat nu va mai avea acces la aplicatie . ");
+        printf(red_color" \n   -REMINDER: Aceasta comanda este specifica doar administratorilor!\n\n"white_color);
+
+        printf("11)Comanda promote:\n   -Iti permite sa restrictionezi promovezi un utilizator la rang-ul de administrator.\n");// de terminat aici !!                      //comanda meniu de ajutor
+        printf("   -Odata ce ai introdus comanda de la tastatura, o sa fii nevoit sa introduci numele utilizatorului pe care doresti sa il promovezi.");
+        printf("\n   -Dupa ce ai introdus numele, vei primi un mesaj de succes iar utilizatorul pe care l-ai promovat este administrator. ");
+        printf(red_color" \n   -REMINDER: Aceasta comanda este specifica doar administratorilor!\n\n"white_color);
+
+        printf("12)Comanda vote:\n   -Iti permite sa votezi unul dintre utilizatori .\n");// de terminat aici !!                      //comanda meniu de ajutor
+        printf("   -Odata ce ai introdus comanda de la tastatura, o sa fii nevoit sa introduci numele utilizatorului pe care doresti sa il votezi.");
+        printf("\n   -Dupa ce ai introdus numele, vei primi un mesaj de succes iar acum utilizatorul pe care l-ai votat are un vot in plus. ");
+        printf(red_color" \n   -REMINDER: Aceasta comanda este specifica atat jucatorilor cat si administratorilor!\n\n"white_color);
+
+        printf("12)Comanda top_votes:\n   -Iti permite sa vizualizezi un top cu toti utilizatorii inregistrati ordonati dupa numarul de voturi pe care il au .\n");// de terminat aici !!                      //comanda meniu de ajutor
+        printf("   -Odata ce ai introdus comanda de la tastatura, se va afisa pe ecran o lista cu toti utilizatorii ordonati in ordine descrescatoare dupa voturile aferente.");
+        printf(red_color" \n   -REMINDER: Aceasta comanda este specifica atat jucatorilor cat si administratorilor!\n\n"white_color);
+
         fflush(stdout);
 
     }
