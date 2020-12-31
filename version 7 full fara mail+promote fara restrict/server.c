@@ -191,7 +191,7 @@ void raspunde(void * arg) {
           } else if(strcmp(string,"trynice")==0) {
             write(tdL.cl, "Trebuie sa fii logat!", sizeof("Trebuie sa fii logat!"));
           }
-        }
+        }else if( (strcmp(message, "history") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "history2", sizeof("history2"));}
 
         else if( (strcmp(message, "promote") == 0) && (tip_utilizator==1) ) {
             write(tdL.cl, "promote", sizeof("promote"));
