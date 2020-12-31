@@ -115,6 +115,7 @@ void raspunde(void * arg) {
              write(tdL.cl, "V-ati logat! Bine ai venit administratorule!", sizeof("V-ati logat! Bine ai venit administratorule!"));
              tip_utilizator=1;
             }
+          else if(strstr(str, type3)) {write(tdL.cl, "Restricted!", sizeof("Restricted!"));}
 
         }
         else write(tdL.cl, "Parola gresita!", sizeof("Parola gresita!"));
@@ -210,6 +211,28 @@ void raspunde(void * arg) {
         }
       }
      else if( (strcmp(message, "promote") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "promote2", sizeof("promote2"));}
+
+
+
+
+
+     else if( (strcmp(message, "restrict") == 0) && (tip_utilizator==1) ) {
+         write(tdL.cl, "restrict", sizeof("restrict"));
+         read(tdL.cl,string,sizeof(string));
+         if(strcmp(string,"nicetry")==0){
+           read(tdL.cl,  nickname, sizeof(nickname));
+           sql[0] = 0;
+           str[0] = 0;
+           sprintf(sql,"UPDATE users SET type='3' WHERE username='%s';",nickname);
+           database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+           write(tdL.cl, "Ati restrictionat cu succes utilizatorul!", sizeof("Ati restrictionat cu succes utilizatorul!"));
+           fflush (stdout);
+           memset(message,0,sizeof(message));
+     }else if(strcmp(string,"trynice")==0) {
+       write(tdL.cl, "Trebuie sa fii logat!", sizeof("Trebuie sa fii logat!"));
+     }
+   }
+  else if( (strcmp(message, "restrict") == 0) && (tip_utilizator==0) ) {  write(tdL.cl, "restrict2", sizeof("restrict2"));}
 
 
 

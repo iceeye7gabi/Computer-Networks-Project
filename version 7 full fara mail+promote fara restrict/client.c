@@ -130,7 +130,10 @@ int main(int argc, char * argv[]) {
 
       if(strcmp(logare,"V-ati logat! Bine ai venit jucatorule!")==0 || strcmp(logare,"V-ati logat! Bine ai venit administratorule!")==0)
             logged=1;
+      else break;
           }
+
+
 
     else if ((strcmp(message, "login") == 0 || (strcmp(message, "register") == 0) ) && (logged==1) ){
       write(socket_descriptor, "nicetry", sizeof("nicetry"));
@@ -242,6 +245,32 @@ int main(int argc, char * argv[]) {
         printf("Trebuie sa fiti administrator!\n");
 
     }
+
+
+
+
+    else if ((strcmp(message, "restrict") == 0) && (logged==1) ){
+          write(socket_descriptor,"nicetry",sizeof("nicetry"));
+          printf("Introduceti numele jucatorului pe care doriti sa il restrictionati: ");
+          fflush(stdout);
+          scanf("%s",  nickname);
+          fflush(stdin);
+          write(socket_descriptor,  nickname, sizeof(nickname));
+
+          read(socket_descriptor,  logare, sizeof(logare));
+          printf("%s\n", logare);
+          fflush(stdout);
+    }else if( (strcmp(message,"restrict2")==0) && (logged==0) ){
+        printf("Trebuie sa va logati pentru a folosi aceasta comanda!\n");
+
+    } else if( (strcmp(message,"restrict2")==0) && (logged==1) ){
+        printf("Trebuie sa fiti administrator!\n");
+
+    }
+
+
+
+
 
 
 
@@ -374,4 +403,3 @@ int main(int argc, char * argv[]) {
   close(socket_descriptor);
   return 0;
 }
-
