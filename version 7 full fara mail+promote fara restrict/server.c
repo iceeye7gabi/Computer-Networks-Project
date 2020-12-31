@@ -115,10 +115,6 @@ void raspunde(void * arg) {
              write(tdL.cl, "V-ati logat! Bine ai venit administratorule!", sizeof("V-ati logat! Bine ai venit administratorule!"));
              tip_utilizator=1;
             }
-            else if(strstr(str, type3)){
-               write(tdL.cl, "Contul dumneavoastra este restrictionat!", sizeof("Contul dumneavoastra este restrictionat!"));
-               tip_utilizator=1;
-              }
 
         }
         else write(tdL.cl, "Parola gresita!", sizeof("Parola gresita!"));
@@ -307,29 +303,6 @@ void raspunde(void * arg) {
       }
 
     } else if( (strcmp(message, "postpone") == 0) && (tip_utilizator==1) ) {  write(tdL.cl, "postpone2", sizeof("postpone"));}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

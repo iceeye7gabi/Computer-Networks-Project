@@ -131,10 +131,7 @@ int main(int argc, char * argv[]) {
       if(strcmp(logare,"V-ati logat! Bine ai venit jucatorule!")==0 || strcmp(logare,"V-ati logat! Bine ai venit administratorule!")==0)
             logged=1;
           }
-          if(strcmp(logare,"Contul dumneavoastra este restrictionat!")==0) {
-            printf("Ne pare rau , dar contul dumneavoastra este restrictionat! O sa fiti deconectati de la aplicatie!");
-            break;
-          }
+
     else if ((strcmp(message, "login") == 0 || (strcmp(message, "register") == 0) ) && (logged==1) ){
       write(socket_descriptor, "nicetry", sizeof("nicetry"));
       read(socket_descriptor,  haha, sizeof(haha));
