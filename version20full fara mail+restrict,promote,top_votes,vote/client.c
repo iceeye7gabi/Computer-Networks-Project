@@ -9,6 +9,7 @@
 #include <string.h>
 
 #define red_color "\x1b[31m"
+#define green_color "\x1b[32m"
 #define yellow_color "\x1b[33m"
 #define blue_color "\x1b[36m"
 #define white_color "\x1b[0m"
@@ -113,13 +114,13 @@ int main(int argc, char * argv[]) {
     else if ((strcmp(message, "login") == 0) && (logged==0) )  {              //comanda login
       int bool=0;
       write(socket_descriptor,"normal",sizeof("normal"));
-      printf("Introduceti nickname-ul: ");
+      printf(blue_color"Introduceti nickname-ul: "white_color);
       fflush(stdout);
       scanf("%s",  nickname);
       fflush(stdin);
 
       write(socket_descriptor,  nickname, sizeof(nickname));
-      printf("Introduceti parola: ");
+      printf(green_color"Introduceti parola: "white_color);
       fflush(stdout);
       scanf("%s",  password);
       fflush(stdin);
@@ -147,19 +148,19 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "register") == 0) && (logged==0) )  {  //comanda register
       write(socket_descriptor,"normal",sizeof("normal"));
-      printf("Introduceti nickname-ul: ");
+      printf(green_color"Introduceti nickname-ul: "white_color);
       fflush(stdout);
       scanf("%s",  nickname);
       fflush(stdin);
       write(socket_descriptor,  nickname, sizeof(nickname));
 
-      printf("Introduceti parola: ");
+      printf(pink_color"Introduceti parola: "white_color);
       fflush(stdout);
       scanf("%s",  password);
       fflush(stdin);
       write(socket_descriptor,  password, sizeof(password));
 
-      printf("Introduceti email-ul: ");
+      printf(red_color"Introduceti email-ul: "white_color);
       fflush(stdout);
       scanf("%s",  email);
       fflush(stdin);
@@ -173,31 +174,31 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "register_tournament") == 0) && (logged==1) ) {   //comanda inregistrea turneu
         write(socket_descriptor,"nicetry",sizeof("nicetry"));
-        printf("Introduceti numele turneului: ");
+        printf(red_color"Introduceti numele turneului: "white_color);
         fflush(stdout);
         scanf("%s",  numeTurneu);
         fflush(stdin);
         write(socket_descriptor,  numeTurneu, sizeof(numeTurneu));
 
-        printf("Introduceti numele jocului: ");
+        printf(blue_color"Introduceti numele jocului: "white_color);
         fflush(stdout);
         scanf("%s",  joc);
         fflush(stdin);
         write(socket_descriptor,  joc, sizeof(joc));
 
-        printf("Introduceti numarul de jucatori: ");
+        printf(green_color"Introduceti numarul de jucatori: "white_color);
         fflush(stdout);
         scanf("%s",  jucatori);
         fflush(stdin);
         write(socket_descriptor, jucatori, sizeof(jucatori));
 
-        printf("Introduceti regula: ");
+        printf(pink_color"Introduceti regula: "white_color);
         fflush(stdout);
         scanf("%s",  regula);
         fflush(stdin);
         write(socket_descriptor, regula, sizeof(regula));
 
-        printf("Introduceti extragerea: ");
+        printf(yellow_color"Introduceti extragerea: "white_color);
         fflush(stdout);
         scanf("%s",  extragerea);
         fflush(stdin);
@@ -218,7 +219,7 @@ int main(int argc, char * argv[]) {
           write(socket_descriptor,"nicetry",sizeof("nicetry"));
           char table[10000];                                                         //comanda istoric partide
           read(socket_descriptor,&table,sizeof(table));
-          printf("Aveti mai jos lista cu toate meciurile care au fost terminate pana in acest moment:\n");
+          printf(green_color"Aveti mai jos lista cu toate meciurile care au fost terminate pana in acest moment:\n"white_color);
           printf("%s\n",table);
           fflush(stdout);
 
@@ -233,7 +234,7 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "promote") == 0) && (logged==1) ){
           write(socket_descriptor,"nicetry",sizeof("nicetry"));
-          printf("Introduceti numele jucatorului pe care doriti sa il promovati: ");
+          printf(blue_color"Introduceti numele jucatorului pe care doriti sa il promovati: "white_color);
           fflush(stdout);
           scanf("%s",  nickname);
           fflush(stdin);
@@ -255,7 +256,7 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "restrict") == 0) && (logged==1) ){
           write(socket_descriptor,"nicetry",sizeof("nicetry"));
-          printf("Introduceti numele jucatorului pe care doriti sa il restrictionati: ");
+          printf(blue_color"Introduceti numele jucatorului pe care doriti sa il restrictionati: "white_color);
           fflush(stdout);
           scanf("%s",  nickname);
           fflush(stdin);
@@ -303,7 +304,7 @@ int main(int argc, char * argv[]) {
           //printf("salut!");
           write(socket_descriptor,"nicetry",sizeof("nicetry"));                     //comanda afisare turnee
           read(socket_descriptor,  tabel, sizeof(tabel));
-          printf("Aveti mai jos lista cu toate turneele disponibile:\n");
+          printf(green_color"Aveti mai jos lista cu toate turneele disponibile:\n"white_color);
           printf("%s",tabel);
           fflush(stdout);
 
@@ -319,9 +320,9 @@ int main(int argc, char * argv[]) {
 
     else if ((strcmp(message, "top_votes") == 0) && (logged==1) ){
           //printf("salut!");
-          write(socket_descriptor,"nicetry",sizeof("nicetry"));                     //comanda afisare turnee
+          write(socket_descriptor,"nicetry",sizeof("nicetry"));                     //comanda afisare top jucatori
           read(socket_descriptor,  tabel, sizeof(tabel));
-          printf("Aveti mai jos lista ordonata cu cei inregistrati si voturile aferente:\n");
+          printf(green_color"Aveti mai jos lista ordonata cu cei inregistrati si voturile aferente:\n"white_color);
           printf("%s",tabel);
           fflush(stdout);
 

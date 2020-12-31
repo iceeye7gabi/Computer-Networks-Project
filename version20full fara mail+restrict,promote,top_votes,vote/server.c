@@ -327,9 +327,24 @@ void raspunde(void * arg) {
           if(strlen(str)>2){
             sql[0] = 0;
             str[0] = 0;
+            sprintf(sql,"SELECT COUNT(*) FROM usersregistered WHERE numeTournament='%s';",nameTournament);
+            database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+            char count[100];strcpy(count,str+11);printf("%s",count);
+
+            sql[0] = 0;
+            str[0] = 0;
+            sprintf(sql, "SELECT Players FROM tournaments WHERE Nume_turneu='%s';", nameTournament);
+            database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
+            char count2[100];strcpy(count2,str+10);printf("%s",count2);
+
+            if(strstr(count,count2)) {write(tdL.cl, "Sunt prea multi inscrisi!", sizeof("Sunt prea multi inscrisi!"));}
+            else{
+            sql[0] = 0;
+            str[0] = 0;
             sprintf(sql, "INSERT INTO usersregistered (username,numeTournament) VALUES ('%s','%s');", nickname, nameTournament);
             database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
             write(tdL.cl, "Sunteti inscris!", sizeof("Sunteti inscris!"));
+          }
         }
           else write(tdL.cl, "Ne pare rau dar campionatul la care v-ati inscris nu exista!", sizeof("Ne pare rau dar campionatul la care v-ati inscris nu exista!"));
           fflush (stdout);
