@@ -1,28 +1,14 @@
 #include <sys/types.h>
-
 #include <sys/socket.h>
-
 #include <netinet/in.h>
-
 #include <errno.h>
-
 #include <unistd.h>
-
 #include <stdio.h>
-
 #include <string.h>
-
 #include <stdlib.h>
-
 #include <signal.h>
-
 #include <pthread.h>
-
 #include <sqlite3.h>
-
-
-
-#include <string.h>
 
 sqlite3 * database;
 #define red_color "\x1b[31m"
@@ -81,7 +67,7 @@ void raspunde(void * arg) {
     }
 
     if (strcmp(message, "quit") == 0) {
-      //printf("salut");
+      printf("[thread]- %d - Inchidere\n", tdL.idThread);
       write(tdL.cl, "quit", sizeof("quit"));
       break;
     }
@@ -300,18 +286,6 @@ void raspunde(void * arg) {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==0)   ) {
         write(tdL.cl, "participate_tournament", sizeof("participate_tournament"));
         read(tdL.cl,string,sizeof(string));
@@ -329,13 +303,13 @@ void raspunde(void * arg) {
             str[0] = 0;
             sprintf(sql,"SELECT COUNT(*) FROM usersregistered WHERE numeTournament='%s';",nameTournament);
             database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
-            char count[100];strcpy(count,str+11);printf("%s",count);
+            char count[100];strcpy(count,str+11);
 
             sql[0] = 0;
             str[0] = 0;
             sprintf(sql, "SELECT Players FROM tournaments WHERE Nume_turneu='%s';", nameTournament);
             database_descriptor = sqlite3_exec(database, sql, callback, str, & error_message);
-            char count2[100];strcpy(count2,str+10);printf("%s",count2);
+            char count2[100];strcpy(count2,str+10);
 
             if(strstr(count,count2)) {write(tdL.cl, "Sunt prea multi inscrisi!", sizeof("Sunt prea multi inscrisi!"));}
             else{
@@ -355,13 +329,6 @@ void raspunde(void * arg) {
       }
 
     } else if( (strcmp(message, "participate_tournament") == 0) && (tip_utilizator==1) ) {  write(tdL.cl, "participate_tournament2", sizeof("participate_tournament2"));}
-
-
-
-
-
-
-
 
 
 
@@ -416,7 +383,7 @@ void raspunde(void * arg) {
 static void * treat(void * arg) {
   struct thData tdL;
   tdL = * ((struct thData * ) arg);
-  //	printf ("[thread]- %d - Asteptam mesajul...\n", tdL.idThread);
+  printf ("[thread]- %d - Asteptam mesajul...\n", tdL.idThread);
   fflush(stdout);
   pthread_detach(pthread_self());
   raspunde((struct thData * ) arg);
@@ -467,7 +434,7 @@ int main() {
     perror("[server]Eroare la listen().\n");
     return errno;
   }
-
+  printf("Acesta este serverul aplicatiei. Se astepata sa se conecteze clientii.\n");
   while (1) {
     int client;
     thData * td; //parametru functia executata de thread
@@ -484,7 +451,6 @@ int main() {
     }
 
     /* s-a realizat conexiunea, se astepta mesajul */
-
     // int idThread; //id-ul threadului
     // int cl; //descriptorul intors de accept
 
